@@ -1,0 +1,33 @@
+﻿<Window x:Class="ProgPoe_WPF.ModulesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProgPoePart1New"
+        mc:Ignorable="d"
+        Title="ModulesWindow" Height="450" Width="800">
+    <Grid>
+        <Label Content="Module code:" HorizontalAlignment="Left" Margin="206,102,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Module name:" HorizontalAlignment="Left" Margin="200,133,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Number of credits:" HorizontalAlignment="Left" Margin="171,164,0,0" VerticalAlignment="Top" Width="134" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Class hours per week:" HorizontalAlignment="Left" Margin="153,193,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="txtModuleCode" HorizontalAlignment="Left" Margin="314,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="154"/>
+        <TextBox x:Name="txtModuleName" HorizontalAlignment="Left" Margin="312,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
+        <TextBox x:Name="txtNumberOfCredits" HorizontalAlignment="Left" Margin="314,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" PreviewTextInput="txtNumberOfCredits_PreviewTextInput"/>
+        <TextBox x:Name="txtClassHoursPerWeek" HorizontalAlignment="Left" Margin="314,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" PreviewTextInput="txtClassHoursPerWeek_PreviewTextInput"/>
+        <Button x:Name="btnAddModule" Content="   Add &#xD;&#xA;Module" HorizontalAlignment="Left" Margin="390,170,0,0" VerticalAlignment="Top" Width="78" Height="46" Click="btnAddModule_Click" FontSize="14" FontWeight="Bold"/>
+        <ListView x:Name="lstDisplayModuleData" 
+          d:ItemsSource="{d:SampleData ItemCount=5}" 
+          Margin="480,107,22,186" 
+          SelectionChanged="lstDisplayModuleData_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Module code" DisplayMemberBinding="{Binding ModuleCode}" Width="120"/>
+                    <GridViewColumn Header="Self study hours left" DisplayMemberBinding="{Binding SelfStudyHoursPerWeek}" Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Modules Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="258" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
+        <Label Content="Click on the module &#xD;&#xA;you spent studying below to &#xD;&#xA;add self study hours spent  " HorizontalAlignment="Left" Margin="480,49,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="160" Height="53" FontSize="11" FontFamily="Arial"/>
+    </Grid>
+</Window>

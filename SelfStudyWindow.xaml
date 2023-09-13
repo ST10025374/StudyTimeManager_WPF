@@ -1,0 +1,22 @@
+﻿<Window x:Class="ProgPoe_WPF.SelfStudyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProgPoePart1New"
+        mc:Ignorable="d"
+        Title="SelfStudyWindow" Height="450" Width="800">
+    <Grid x:Name="btnGoBack">
+        <Label Content="Amount of hours  spent studying:" HorizontalAlignment="Left" Margin="173,168,0,0" VerticalAlignment="Top" Width="238" FontWeight="Bold" FontSize="14"/>
+        <TextBox x:Name="txtNumberOfSpentWorking" HorizontalAlignment="Left" Margin="430,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" PreviewTextInput="txtNumberOfSpentWorking_PreviewTextInput"/>
+        <Button x:Name="btnAddSelfStudyHours" Content="Record" HorizontalAlignment="Left" Margin="430,247,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSelfStudy_Click" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Pick date spent studying:" HorizontalAlignment="Left" Margin="220,205,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold" FontSize="14"/>
+        <DatePicker x:Name="dtDateWorked" HorizontalAlignment="Left" Margin="430,210,0,0" VerticalAlignment="Top"/>
+        <Label Content="Self Study Weekly Session" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="304" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
+        <Button x:Name="btnGoBack1" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="430,284,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="lbl1" Content="self study hours left:" HorizontalAlignment="Left" Margin="560,24,0,0" VerticalAlignment="Top" Width="147" FontWeight="Bold" FontSize="14" Foreground="Black"/>
+        <Label x:Name="lblModuleCode" Content="Code" HorizontalAlignment="Left" Margin="401,18,0,0" VerticalAlignment="Top" Width="131" FontWeight="Bold" FontSize="22" Foreground="Black"/>
+        <Label x:Name="lblHoursLeft" Content="Hours" HorizontalAlignment="Left" Margin="712,24,0,0" VerticalAlignment="Top" Width="53" FontWeight="Bold" FontSize="14" Foreground="Red"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,18 @@
+﻿<Window x:Class="ProgPoe_WPF.SemesterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProgPoePart1New"
+        mc:Ignorable="d"
+        Title="SemesterWindow" Height="450" Width="800">
+    <Grid>
+        <Label Content="Number of weeks for the semester:" HorizontalAlignment="Left" Margin="217,142,0,0" VerticalAlignment="Top" Width="325" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Start date for the semester:" HorizontalAlignment="Left" Margin="217,176,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="txtNumberOfWeeks" HorizontalAlignment="Left" Margin="482,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" PreviewTextInput="txtNumberOfWeeks_PreviewTextInput"/>
+        <DatePicker x:Name="dtStartDate" HorizontalAlignment="Left" Margin="482,178,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnAddSemester" Content="Add Semester" HorizontalAlignment="Left" Margin="482,217,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSemester_Click" Height="26" FontWeight="Bold" FontSize="14"/>
+        <Label Content="Semester Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
+
+    </Grid>
+</Window>
