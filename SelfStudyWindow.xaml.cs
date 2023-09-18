@@ -1,6 +1,8 @@
 ﻿using ProgPoe_ClassLibrary;
 using System.Linq;
 using System.Media;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -47,9 +49,12 @@ namespace ProgPoe_WPF
             {
                 if (Module.ModuleCode == ModuleCode)
                 {
+                    lblHoursRequired.Content = Module.ModuleHoursPerWeek.ToString();
                     lblHoursLeft.Content =  Module.SelfStudyHoursPerWeek.ToString();
                 }
             }
+
+            DisplayStudySessions();
         }
 
         ///--------------------------------------------------------------------------///
@@ -60,6 +65,7 @@ namespace ProgPoe_WPF
         /// If the module is found and no record for the selected date exists
         /// If study record sucessfully is saved it will display a message to the user to inform him
         /// Error messages come with sounds
+        /// If study time is completed a message will be displayed for user and selfStudy time will be restarted
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -78,11 +84,20 @@ namespace ProgPoe_WPF
                 {
                     double NewHoursLeft = Calculate.CalcMinus(targetModule.SelfStudyHoursPerWeek, double.Parse(HoursSpent));
 
-                    targetModule.SelfStudyHoursPerWeek = NewHoursLeft;
-                    lblHoursLeft.Content = targetModule.SelfStudyHoursPerWeek;
-
-                    targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
-                    MessageBox.Show("Study record saved.", "Saved");
+                    if (NewHoursLeft.Equals(0))
+                    {
+                        MessageBox.Show("Study time for this week was completed. " +
+                            "Study time will restart for next week", "Hours completed");
+                        targetModule.SelfStudyHoursPerWeek = targetModule.ModuleHoursPerWeek;
+                        lblHoursLeft.Content = targetModule.SelfStudyHoursPerWeek;
+                    }
+                    else
+                    {
+                        targetModule.SelfStudyHoursPerWeek = NewHoursLeft;
+                        lblHoursLeft.Content = targetModule.SelfStudyHoursPerWeek;
+                        targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
+                        MessageBox.Show("Study session saved.", "Saved");
+                    }                       
                 }
                 else if (targetModule != null)
                 {
@@ -95,6 +110,8 @@ namespace ProgPoe_WPF
                 SystemSounds.Hand.Play();
                 MessageBox.Show("Please add amount of hours spent working and the date", "Error");
             }
+
+            DisplayStudySessions();
 
             /*             -------------- Old code without using LINQ----------------
             var HoursSpent = txtNumberOfSpentWorking.Text;
@@ -155,6 +172,29 @@ namespace ProgPoe_WPF
             ModulesWindow moduleWindow = new ModulesWindow(_Semester);
             moduleWindow.Show();
             Hide();
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Method use to Display study sessions in ListBox
+        /// Method gets desired moduleCode 
+        /// It uses a for each to display each key in dictionary
+        /// Combines Date and hours into a single string
+        /// </summary>
+        public void DisplayStudySessions()
+        {
+            lstDisplaySessions.Items.Clear();
+
+            var TargetModule = _Semester.ModulesList.FirstOrDefault(module => module.ModuleCode == ModuleCode);
+
+            if (TargetModule != null)
+            {
+                foreach (var entry in TargetModule.StudySessionsRecords)
+                {
+                    string Output = $"Date: {entry.Key.ToShortDateString()} Time: {entry.Value}h";
+                    lstDisplaySessions.Items.Add(Output);
+                }
+            }
         }
     }
 }

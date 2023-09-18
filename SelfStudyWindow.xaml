@@ -10,15 +10,19 @@
         <ImageBrush ImageSource="pack://application:,,,/ProgPoe_ClassLibrary;component/Image/Background1.png"/>
     </Window.Background>
     <Grid x:Name="btnGoBack">
-        <Label Content="Amount of hours  spent studying:" HorizontalAlignment="Left" Margin="216,166,0,0" VerticalAlignment="Top" Width="238" FontWeight="Bold" FontSize="14"/>
-        <TextBox x:Name="txtNumberOfSpentWorking" HorizontalAlignment="Left" Margin="474,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" PreviewTextInput="txtNumberOfSpentWorking_PreviewTextInput"/>
-        <Button x:Name="btnAddSelfStudyHours" Content="Record" HorizontalAlignment="Left" Margin="474,243,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSelfStudy_Click" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Pick date spent studying:" HorizontalAlignment="Left" Margin="264,202,0,0" VerticalAlignment="Top" Width="180" FontWeight="Bold" FontSize="14"/>
-        <DatePicker x:Name="dtDateWorked" HorizontalAlignment="Left" Margin="474,208,0,0" VerticalAlignment="Top"/>
+        <Label Content="Amount of hours  spent studying:" HorizontalAlignment="Left" Margin="50,184,0,0" VerticalAlignment="Top" Width="298" FontSize="18" FontWeight="Bold"/>
+        <TextBox x:Name="txtNumberOfSpentWorking" HorizontalAlignment="Left" Margin="362,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" PreviewTextInput="txtNumberOfSpentWorking_PreviewTextInput"/>
+        <Button x:Name="btnAddSelfStudyHours" Content="Record" HorizontalAlignment="Left" Margin="362,272,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSelfStudy_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
+        <Label Content="Pick date spent studying:" HorizontalAlignment="Left" Margin="124,230,0,0" VerticalAlignment="Top" Width="224" FontWeight="Bold" FontSize="18"/>
+        <DatePicker x:Name="dtDateWorked" HorizontalAlignment="Left" Margin="362,236,0,0" VerticalAlignment="Top"/>
         <Label Content="Self Study Weekly Session" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="304" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
-        <Button x:Name="btnGoBack1" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="474,282,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold"/>
-        <Label x:Name="lbl1" Content="self study hours left:" HorizontalAlignment="Left" Margin="172,86,0,0" VerticalAlignment="Top" Width="146" FontWeight="Bold" FontSize="14" Foreground="Black"/>
-        <Label x:Name="lblModuleCode" Content="Code" HorizontalAlignment="Left" Margin="12,80,0,0" VerticalAlignment="Top" Width="132" FontWeight="Bold" FontSize="22" Foreground="Black"/>
-        <Label x:Name="lblHoursLeft" Content="Hours" HorizontalAlignment="Left" Margin="324,86,0,0" VerticalAlignment="Top" Width="52" FontWeight="Bold" FontSize="14" Foreground="Red"/>
+        <Button x:Name="btnGoBack1" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="362,310,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold" Background="#FF9957ED"/>
+        <Label x:Name="lbl1" Content="Self study hours left for current week:" HorizontalAlignment="Left" Margin="363,105,0,0" VerticalAlignment="Top" Width="333" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label x:Name="lblModuleCode" Content="Code" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="304" FontWeight="Bold" FontSize="36" Foreground="Black"/>
+        <Label x:Name="lblHoursLeft" Content="0" HorizontalAlignment="Left" Margin="701,105,0,0" VerticalAlignment="Top" Width="68" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <ListBox x:Name="lstDisplaySessions" Margin="506,198,38,101" Background="White"/>
+        <Label x:Name="lbl2" Content="Weekly self study hours required:" HorizontalAlignment="Left" Margin="400,76,0,0" VerticalAlignment="Top" Width="296" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="701,71,0,0" VerticalAlignment="Top" Width="68" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <Label Content="Sessions" HorizontalAlignment="Left" Margin="598,164,0,0" VerticalAlignment="Top" Width="72" FontSize="14" FontWeight="Bold" Foreground="White"/>
     </Grid>
 </Window>

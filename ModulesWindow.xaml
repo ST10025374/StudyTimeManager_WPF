@@ -10,15 +10,15 @@
         <ImageBrush ImageSource="pack://application:,,,/ProgPoe_ClassLibrary;component/Image/Background1.png"/>
     </Window.Background>
     <Grid>
-        <Label Content="Module code:" HorizontalAlignment="Left" Margin="142,162,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Module name:" HorizontalAlignment="Left" Margin="136,193,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Number of credits:" HorizontalAlignment="Left" Margin="107,224,0,0" VerticalAlignment="Top" Width="134" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Class hours per week:" HorizontalAlignment="Left" Margin="89,253,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Module code:" HorizontalAlignment="Left" Margin="115,159,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Module name:" HorizontalAlignment="Left" Margin="109,190,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Number of credits:" HorizontalAlignment="Left" Margin="74,221,0,0" VerticalAlignment="Top" Width="171" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Class hours per week:" HorizontalAlignment="Left" Margin="53,251,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
         <TextBox x:Name="txtModuleCode" HorizontalAlignment="Left" Margin="250,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="154"/>
         <TextBox x:Name="txtModuleName" HorizontalAlignment="Left" Margin="248,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156"/>
         <TextBox x:Name="txtNumberOfCredits" HorizontalAlignment="Left" Margin="250,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" PreviewTextInput="txtNumberOfCredits_PreviewTextInput"/>
         <TextBox x:Name="txtClassHoursPerWeek" HorizontalAlignment="Left" Margin="250,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" PreviewTextInput="txtClassHoursPerWeek_PreviewTextInput"/>
-        <Button x:Name="btnAddModule" Content="   Add &#xD;&#xA;Module" HorizontalAlignment="Left" Margin="326,230,0,0" VerticalAlignment="Top" Width="78" Height="46" Click="btnAddModule_Click" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="btnAddModule" Content="   Add &#xD;&#xA;Module" HorizontalAlignment="Left" Margin="326,230,0,0" VerticalAlignment="Top" Width="78" Height="46" Click="btnAddModule_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
         <ListView x:Name="lstDisplayModuleData" 
           d:ItemsSource="{d:SampleData ItemCount=5}" 
           Margin="416,167,86,126" 
@@ -26,11 +26,11 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Module code" DisplayMemberBinding="{Binding ModuleCode}" Width="120"/>
-                    <GridViewColumn Header="Self study hours left" DisplayMemberBinding="{Binding SelfStudyHoursPerWeek}" Width="150"/>
+                    <GridViewColumn Header="Weekly self study hours" DisplayMemberBinding="{Binding ModuleHoursPerWeek}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <Label Content="Modules Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="258" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
-        <Label Content="Click on the module &#xD;&#xA;you spent studying below to &#xD;&#xA;add self study hours spent  " HorizontalAlignment="Left" Margin="416,109,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="160" Height="53" FontSize="11" FontFamily="Arial"/>
+        <Label Content="Click on the module &#xD;&#xA;you spent studying below to &#xD;&#xA;add self study hours spent  " HorizontalAlignment="Left" Margin="416,90,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="203" Height="72" FontSize="14" FontFamily="Arial"/>
     </Grid>
 </Window>

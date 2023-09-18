@@ -10,11 +10,11 @@
         <ImageBrush ImageSource="pack://application:,,,/ProgPoe_ClassLibrary;component/Image/Background1.png"/>
     </Window.Background>
     <Grid>
-        <Label Content="Number of weeks for the semester:" HorizontalAlignment="Left" Margin="214,142,0,0" VerticalAlignment="Top" Width="325" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Start date for the semester:" HorizontalAlignment="Left" Margin="214,176,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Number of weeks for the semester:" HorizontalAlignment="Left" Margin="146,139,0,0" VerticalAlignment="Top" Width="308" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Start date of the semester:" HorizontalAlignment="Left" Margin="219,173,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
         <TextBox x:Name="txtNumberOfWeeks" HorizontalAlignment="Left" Margin="479,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" PreviewTextInput="txtNumberOfWeeks_PreviewTextInput"/>
         <DatePicker x:Name="dtStartDate" HorizontalAlignment="Left" Margin="479,178,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnAddSemester" Content="Add Semester" HorizontalAlignment="Left" Margin="479,217,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSemester_Click" Height="26" FontWeight="Bold" FontSize="14"/>
+        <Button x:Name="btnAddSemester" Content="Add Semester" HorizontalAlignment="Left" Margin="479,217,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSemester_Click" Height="26" FontWeight="Bold" FontSize="14" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
         <Label Content="Semester Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
 
     </Grid>

@@ -10,8 +10,8 @@
         <ImageBrush ImageSource="pack://application:,,,/ProgPoe_ClassLibrary;component/Image/Background1.png"/>
     </Window.Background>
     <Grid>
-        <Button x:Name="btnLogin" Content="Login " HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Width="80" Click="btnLogin_Click" FontSize="14" FontWeight="Bold"/>
+        <Button x:Name="btnLogin" Content="Login " HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Width="80" Click="btnLogin_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
         <Label Content="Student Self Study Time Management Desktop App" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="574" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
-        <Label Content="Click button to login " HorizontalAlignment="Center" Margin="0,159,0,0" VerticalAlignment="Top" Width="148" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Click button to login " HorizontalAlignment="Center" Margin="0,152,0,0" VerticalAlignment="Top" Width="188" FontSize="18" FontWeight="Bold"/>
     </Grid>
 </Window>

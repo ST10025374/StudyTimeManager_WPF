@@ -82,6 +82,8 @@ namespace ProgPoe_WPF
                                                      _Semester.NumberOfWeeks,
                                                       Module.ClassHoursPerWeek);
 
+                Module.ModuleHoursPerWeek = Module.SelfStudyHoursPerWeek;
+
                 _Semester.ModulesList.Add(Module);
 
                 ModulesView.Add(Module);
