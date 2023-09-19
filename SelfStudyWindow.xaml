@@ -19,10 +19,10 @@
         <Button x:Name="btnGoBack1" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="362,310,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold" Background="#FF9957ED"/>
         <Label x:Name="lbl1" Content="Self study hours left for current week:" HorizontalAlignment="Left" Margin="363,105,0,0" VerticalAlignment="Top" Width="333" FontWeight="Bold" FontSize="18" Foreground="Black"/>
         <Label x:Name="lblModuleCode" Content="Code" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="304" FontWeight="Bold" FontSize="36" Foreground="Black"/>
-        <Label x:Name="lblHoursLeft" Content="0" HorizontalAlignment="Left" Margin="701,105,0,0" VerticalAlignment="Top" Width="68" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <Label x:Name="lblHoursLeft" Content="0" HorizontalAlignment="Left" Margin="701,105,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
         <ListBox x:Name="lstDisplaySessions" Margin="506,198,38,101" Background="White"/>
         <Label x:Name="lbl2" Content="Weekly self study hours required:" HorizontalAlignment="Left" Margin="400,76,0,0" VerticalAlignment="Top" Width="296" FontWeight="Bold" FontSize="18" Foreground="Black"/>
-        <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="701,71,0,0" VerticalAlignment="Top" Width="68" FontWeight="Bold" FontSize="18" Foreground="White"/>
-        <Label Content="Sessions" HorizontalAlignment="Left" Margin="598,164,0,0" VerticalAlignment="Top" Width="72" FontSize="14" FontWeight="Bold" Foreground="White"/>
+        <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="701,76,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <Label Content="Sessions" HorizontalAlignment="Left" Margin="506,144,0,0" VerticalAlignment="Top" Width="174" FontSize="36" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="49"/>
     </Grid>
 </Window>

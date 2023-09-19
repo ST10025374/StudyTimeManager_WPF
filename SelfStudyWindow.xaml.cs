@@ -90,6 +90,7 @@ namespace ProgPoe_WPF
                             "Study time will restart for next week", "Hours completed");
                         targetModule.SelfStudyHoursPerWeek = targetModule.ModuleHoursPerWeek;
                         lblHoursLeft.Content = targetModule.SelfStudyHoursPerWeek;
+                        targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
                     }
                     else
                     {
@@ -110,6 +111,8 @@ namespace ProgPoe_WPF
                 SystemSounds.Hand.Play();
                 MessageBox.Show("Please add amount of hours spent working and the date", "Error");
             }
+
+            txtNumberOfSpentWorking.Text = string.Empty;
 
             DisplayStudySessions();
 
