@@ -49,6 +49,7 @@ namespace ProgPoe_WPF
             {
                 if (Module.ModuleCode == ModuleCode)
                 {
+                    lblCurrentWeek.Content = Module.CurrentWeek;
                     lblHoursRequired.Content = Module.ModuleHoursPerWeek.ToString();
                     lblHoursLeft.Content =  Module.SelfStudyHoursPerWeek.ToString();
                 }
@@ -91,6 +92,9 @@ namespace ProgPoe_WPF
                         targetModule.SelfStudyHoursPerWeek = targetModule.ModuleHoursPerWeek;
                         lblHoursLeft.Content = targetModule.SelfStudyHoursPerWeek;
                         targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
+
+                        targetModule.CurrentWeek = targetModule.CurrentWeek + 1;
+                        lblCurrentWeek.Content = targetModule.CurrentWeek;
                     }
                     else
                     {

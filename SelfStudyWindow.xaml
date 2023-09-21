@@ -17,12 +17,14 @@
         <DatePicker x:Name="dtDateWorked" HorizontalAlignment="Left" Margin="362,236,0,0" VerticalAlignment="Top"/>
         <Label Content="Self Study Weekly Session" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="304" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
         <Button x:Name="btnGoBack1" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="362,310,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold" Background="#FF9957ED"/>
-        <Label x:Name="lbl1" Content="Self study hours left for current week:" HorizontalAlignment="Left" Margin="363,105,0,0" VerticalAlignment="Top" Width="333" FontWeight="Bold" FontSize="18" Foreground="Black"/>
-        <Label x:Name="lblModuleCode" Content="Code" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="304" FontWeight="Bold" FontSize="36" Foreground="Black"/>
-        <Label x:Name="lblHoursLeft" Content="0" HorizontalAlignment="Left" Margin="701,105,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <Label x:Name="lbl1" Content="Self study hours left for current week:" HorizontalAlignment="Left" Margin="310,110,0,0" VerticalAlignment="Top" Width="333" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label x:Name="lblModuleCode" Content="Code" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="274" FontWeight="Bold" FontSize="36" Foreground="Black"/>
+        <Label x:Name="lblHoursLeft" Content="0" HorizontalAlignment="Left" Margin="648,110,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
         <ListBox x:Name="lstDisplaySessions" Margin="506,198,38,101" Background="White"/>
-        <Label x:Name="lbl2" Content="Weekly self study hours required:" HorizontalAlignment="Left" Margin="400,76,0,0" VerticalAlignment="Top" Width="296" FontWeight="Bold" FontSize="18" Foreground="Black"/>
-        <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="701,76,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
-        <Label Content="Sessions" HorizontalAlignment="Left" Margin="506,144,0,0" VerticalAlignment="Top" Width="174" FontSize="36" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="49"/>
+        <Label x:Name="lbl2" Content="Weekly self study hours required:" HorizontalAlignment="Left" Margin="347,76,0,0" VerticalAlignment="Top" Width="296" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label Content="Sessions" HorizontalAlignment="Left" Margin="506,144,0,0" VerticalAlignment="Top" Width="103" FontSize="36" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="49"/>
+        <Label x:Name="lbl2_Copy" Content="Current Week:" HorizontalAlignment="Left" Margin="506,42,0,0" VerticalAlignment="Top" Width="138" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label x:Name="lblCurrentWeek" Content="0" HorizontalAlignment="Left" Margin="644,23,0,0" VerticalAlignment="Top" Width="57" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="648,76,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
     </Grid>
 </Window>
