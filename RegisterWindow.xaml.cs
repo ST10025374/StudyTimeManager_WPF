@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ProgPoe_ClassLibrary;
 using System.Media;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProgPoePart1New
 {
@@ -31,7 +20,7 @@ namespace ProgPoePart1New
             var username = txtUsername.Text;
             var password = txtPassword.Text;
             //var confirmPassword = txtConfirmPassword.Text;
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
             {
                 SystemSounds.Hand.Play();
                 MessageBox.Show("Please make sure you added all user information", "Error");
@@ -57,7 +46,28 @@ namespace ProgPoePart1New
                 MessageBox.Show("Password must be 8 or longer characters", "Error");
                 return;
             }
+            if (!password.Equals(txtConfirmPassword.Text))
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show("Passwords must match!", "Error");
+                return;
+            }
 
+            // Create user from database
+            var newUser = new UserClass(txtUsername.Text, txtPassword.Text);
+
+            var response = new DatabaseManagerClass().CreateUser(newUser);
+            if (!response.Equals(string.Empty))
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show(response, "Error");
+                return;
+            }
+
+            // login to system
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Hide();
 
         }
     }

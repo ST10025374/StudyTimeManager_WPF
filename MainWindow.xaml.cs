@@ -1,4 +1,7 @@
-﻿using ProgPoe_WPF;
+﻿using ProgPoe_ClassLibrary;
+using ProgPoe_WPF;
+using System;
+using System.Media;
 using System.Windows;
 
 namespace ProgPoePart1New
@@ -22,6 +25,20 @@ namespace ProgPoePart1New
         /// <param name="e"></param>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            // get answer from database
+            var response = new DatabaseManagerClass().ReadUser(txtUsername.Text,txtPassword.Text);
+            Guid userId = Guid.NewGuid();
+            try
+            {
+                userId = Guid.Parse(response);
+            } catch
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show(response, "Error");
+                return;
+            }
+            // if it does, login and pass on userId
+            StoredIDs.UserId = userId;
             SemesterWindow semesterWindow = new SemesterWindow();
             semesterWindow.Show();
             Hide();
@@ -29,7 +46,9 @@ namespace ProgPoePart1New
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
-
+            RegisterWindow registerWindow = new RegisterWindow();
+            registerWindow.Show();
+            Hide();
         }
     }
 }
