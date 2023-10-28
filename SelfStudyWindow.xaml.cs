@@ -1,8 +1,6 @@
 ﻿using ProgPoe_ClassLibrary;
 using System.Linq;
 using System.Media;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -18,12 +16,12 @@ namespace ProgPoe_WPF
         /// <summary>
         /// Instance of CalculationClass
         /// </summary>
-        CalculationsClass Calculate = new CalculationsClass();
+        private CalculationsClass Calculate = new CalculationsClass();
 
         /// <summary>
         /// Store Module Code selected from ModulesWindow
         /// </summary>
-        private string ModuleCode;
+        private string _ModuleCode;
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Default Constructor
@@ -42,16 +40,16 @@ namespace ProgPoe_WPF
         {
             InitializeComponent();
             _Semester = semester;
-            ModuleCode = moduleCode;
-            lblModuleCode.Content = ModuleCode;
+            _ModuleCode = moduleCode;
+            lblModuleCode.Content = _ModuleCode;
             
             foreach (var Module in _Semester.ModulesList)
             {
-                if (Module.ModuleCode == ModuleCode)
+                if (Module.ModuleCode == _ModuleCode)
                 {
                     lblCurrentWeek.Content = Module.CurrentWeek;
-                    lblHoursRequired.Content = Module.ModuleHoursPerWeek.ToString();
-                    lblHoursLeft.Content =  Module.SelfStudyHoursPerWeek.ToString();
+                    lblHoursRequired.Content = Module.StudyHoursPerWeek.ToString();
+                    lblHoursLeft.Content =  Module.StudyHoursLeft.ToString();
                 }
             }
 
@@ -76,35 +74,42 @@ namespace ProgPoe_WPF
 
             if (!string.IsNullOrEmpty(HoursSpent) && dtDateWorked.SelectedDate.HasValue)
             {
-              
+                // finding module by code
                 var targetModule = _Semester.ModulesList
-                    .FirstOrDefault(module => module.ModuleCode == ModuleCode);
+                    .FirstOrDefault(module => module.ModuleCode == _ModuleCode);
 
+                // cannot have 2 study sessions on one day
                 if (targetModule != null &&
                     !targetModule.StudySessionsRecords.ContainsKey(dtDateWorked.SelectedDate.Value))
                 {
-                    double NewHoursLeft = Calculate.CalcMinus(targetModule.SelfStudyHoursPerWeek, double.Parse(HoursSpent));
+                    int NewHoursLeft = Calculate.CalcMinus(targetModule.StudyHoursLeft, int.Parse(HoursSpent));
 
                     if (NewHoursLeft.Equals(0))
                     {
                         MessageBox.Show("Study time for this week was completed. " +
                             "Study time will restart for next week", "Hours completed");
-                        targetModule.SelfStudyHoursPerWeek = targetModule.ModuleHoursPerWeek;
-                        lblHoursLeft.Content = targetModule.SelfStudyHoursPerWeek;
-                        targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
 
+                        lblHoursLeft.Content = targetModule.StudyHoursLeft;
+
+                        // Current week changes
                         targetModule.CurrentWeek = targetModule.CurrentWeek + 1;
                         lblCurrentWeek.Content = targetModule.CurrentWeek;
+                        NewHoursLeft = targetModule.StudyHoursPerWeek;
                     }
                     else
                     {
-                        targetModule.SelfStudyHoursPerWeek = NewHoursLeft;
-                        lblHoursLeft.Content = targetModule.SelfStudyHoursPerWeek;
-                        targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
                         MessageBox.Show("Study session saved.", "Saved");
-                    }                       
+                    }
+
+                    targetModule.TotalHours += int.Parse(HoursSpent);
+                    lblTotalHours.Content = targetModule.TotalHours;
+
+                    targetModule.StudyHoursLeft = NewHoursLeft;
+                    lblHoursLeft.Content = NewHoursLeft.ToString();
+
+                    targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
                 }
-                else if (targetModule != null)
+                else
                 {
                     SystemSounds.Hand.Play();
                     MessageBox.Show("A study record for this date already exists.", "Error");
@@ -191,8 +196,10 @@ namespace ProgPoe_WPF
         public void DisplayStudySessions()
         {
             lstDisplaySessions.Items.Clear();
+           
+            var TargetModule = _Semester.ModulesList.FirstOrDefault(module => module.ModuleCode == _ModuleCode);
 
-            var TargetModule = _Semester.ModulesList.FirstOrDefault(module => module.ModuleCode == ModuleCode);
+            lblTotalHours.Content = TargetModule.TotalHours.ToString(); 
 
             if (TargetModule != null)
             {

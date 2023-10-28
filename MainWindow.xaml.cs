@@ -26,6 +26,11 @@ namespace ProgPoePart1New
             semesterWindow.Show();
             Hide();
         }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 ///-----------------------------------------------------------< END >---------------------------------------------------------------------///

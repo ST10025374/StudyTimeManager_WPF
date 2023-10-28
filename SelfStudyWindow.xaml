@@ -26,5 +26,7 @@
         <Label x:Name="lbl2_Copy" Content="Current Week:" HorizontalAlignment="Left" Margin="506,42,0,0" VerticalAlignment="Top" Width="138" FontWeight="Bold" FontSize="18" Foreground="Black"/>
         <Label x:Name="lblCurrentWeek" Content="0" HorizontalAlignment="Left" Margin="644,23,0,0" VerticalAlignment="Top" Width="57" FontWeight="Bold" FontSize="36" Foreground="White"/>
         <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="648,76,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <Label Content="total hours:" HorizontalAlignment="Left" Margin="634,154,0,0" VerticalAlignment="Top" Width="103" FontSize="24" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="36"/>
+        <Label x:Name="lblTotalHours" Content="0" HorizontalAlignment="Left" Margin="725,156,0,0" VerticalAlignment="Top" Width="59" FontWeight="Bold" FontSize="18" Foreground="White" RenderTransformOrigin="0.271,0.414"/>
     </Grid>
 </Window>

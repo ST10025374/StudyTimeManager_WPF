@@ -26,7 +26,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Module code" DisplayMemberBinding="{Binding ModuleCode}" Width="120"/>
-                    <GridViewColumn Header="Weekly self study hours" DisplayMemberBinding="{Binding ModuleHoursPerWeek}" Width="150"/>
+                    <GridViewColumn Header="Weekly self study hours" DisplayMemberBinding="{Binding StudyHoursPerWeek}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>

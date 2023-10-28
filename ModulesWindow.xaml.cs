@@ -61,28 +61,33 @@ namespace ProgPoe_WPF
         {
             var moduleCode = txtModuleCode.Text;
             var moduleName = txtModuleName.Text;
-            var numberOfCredits = txtNumberOfCredits.Text;
-            var classHoursPerWeek = txtClassHoursPerWeek.Text;
-
-            if (!string.IsNullOrEmpty(moduleCode) && !string.IsNullOrEmpty(moduleName) &&
-               !string.IsNullOrEmpty(numberOfCredits) && !string.IsNullOrEmpty(classHoursPerWeek))
+            int numberOfCredits = 0;
+            int classHoursPerWeek = 0;
+            try
             {
+                numberOfCredits = int.Parse(txtNumberOfCredits.Text);
+                classHoursPerWeek = int.Parse(txtClassHoursPerWeek.Text);
+            }
+            catch
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show("Please make sure you added all module information", "Error");
+                return;
+            }
 
-                CalculationsClass Calculation = new CalculationsClass();
-
-                ModuleClass Module = new ModuleClass();
-
-                Module.ModuleCode = moduleCode;
-                Module.ModuleName = moduleName;
-                Module.NumberOfCredits = int.Parse(numberOfCredits);
-                Module.ClassHoursPerWeek = int.Parse(classHoursPerWeek);
-
-                Module.SelfStudyHoursPerWeek =
-                Calculation.CalcSelfStudyHoursPerWeek(Module.NumberOfCredits,
-                                                     _Semester.NumberOfWeeks,
-                                                      Module.ClassHoursPerWeek);
-
-                Module.ModuleHoursPerWeek = Module.SelfStudyHoursPerWeek;
+            if (!string.IsNullOrEmpty(moduleCode) && !string.IsNullOrEmpty(moduleName))
+            {
+                ModuleClass Module;
+                try
+                {
+                    Module = new ModuleClass(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, _Semester.NumberOfWeeks);
+                }
+                catch
+                {
+                    SystemSounds.Hand.Play();
+                    MessageBox.Show("Calculation Invalid, please enter a valid class hours and number of credit combination", "Error");
+                    return;
+                }
 
                 _Semester.ModulesList.Add(Module);
 
@@ -92,8 +97,6 @@ namespace ProgPoe_WPF
                 txtModuleName.Text = string.Empty;
                 txtNumberOfCredits.Text = string.Empty;
                 txtClassHoursPerWeek.Text = string.Empty;
-
-                return;
             }
             else
             {
