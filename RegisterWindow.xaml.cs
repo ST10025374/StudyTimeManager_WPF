@@ -10,16 +10,30 @@ namespace ProgPoePart1New
     /// </summary>
     public partial class RegisterWindow : Window
     {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public RegisterWindow()
         {
             InitializeComponent();
         }
 
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Button to Register User
+        /// If either the username or password is empty, display an error message and play a sound\
+        /// Check if username and password are empty
+        /// Create a new user with the provided username and password
+        /// Attempt to create the user in the database
+        /// Check if there was an error during user creation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             var username = txtUsername.Text;
             var password = txtPassword.Text;
-            //var confirmPassword = txtConfirmPassword.Text;
+           
             if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
             {
                 SystemSounds.Hand.Play();
@@ -40,7 +54,7 @@ namespace ProgPoePart1New
                 MessageBox.Show("Password must contain a capital letter", "Error");
                 return;
             }
-            if (password.Length > 8)
+            if (password.Length < 8)
             {
                 SystemSounds.Hand.Play();
                 MessageBox.Show("Password must be 8 or longer characters", "Error");
@@ -68,7 +82,20 @@ namespace ProgPoePart1New
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Hide();
+        }
 
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Button takes user back to main menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGoBackToMain_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Hide();
         }
     }
 }
+///-----------------------------------------------------------< END >---------------------------------------------------------------------///

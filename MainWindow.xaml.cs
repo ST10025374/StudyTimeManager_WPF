@@ -26,24 +26,32 @@ namespace ProgPoePart1New
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             // get answer from database
-            var response = new DatabaseManagerClass().ReadUser(txtUsername.Text,txtPassword.Text);
+            var response = new DatabaseManagerClass().ReadUser(txtUsername.Text, txtPassword.Text);
             Guid userId = Guid.NewGuid();
             try
             {
                 userId = Guid.Parse(response);
-            } catch
+            }
+            catch
             {
                 SystemSounds.Hand.Play();
                 MessageBox.Show(response, "Error");
                 return;
             }
+
             // if it does, login and pass on userId
             StoredIDs.UserId = userId;
-            SemesterWindow semesterWindow = new SemesterWindow();
-            semesterWindow.Show();
+            MenuWindow menuWindow = new MenuWindow();
+            menuWindow.Show();
             Hide();
         }
 
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Method to Register User
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             RegisterWindow registerWindow = new RegisterWindow();

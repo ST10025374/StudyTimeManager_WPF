@@ -6,15 +6,19 @@
         xmlns:local="clr-namespace:ProgPoePart1New"
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="pack://application:,,,/ProgPoe_ClassLibrary;component/Image/Background1.png"/>
+    </Window.Background>
     <Grid>
-        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" Margin="360,171,0,0"/>
-        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" Margin="360,206,0,0"/>
-        <Label Content="Choose username " HorizontalAlignment="Left" Margin="171,161,0,0" VerticalAlignment="Top" Width="172" FontSize="18" FontWeight="Bold"/>
-        <Label Content="Choose password " HorizontalAlignment="Left" Margin="171,0,0,0" VerticalAlignment="Center" Width="163" FontSize="18" FontWeight="Bold"/>
-        <Button x:Name="btnConfirm" Content="Confirm" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="80" Click="btnConfirm_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Margin="0,274,0,0"/>
-        <TextBox x:Name="txtConfirmPassword" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" Margin="360,240,0,0"/>
-        <Label Content="Confirm password " HorizontalAlignment="Left" Margin="171,232,0,0" VerticalAlignment="Top" Width="163" FontSize="18" FontWeight="Bold"/>
-        <Label Content="Register " HorizontalAlignment="Left" Margin="392,56,0,0" VerticalAlignment="Top" Width="110" FontSize="18" FontWeight="Bold"/>
+        <TextBox x:Name="txtUsername" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" Margin="400,150,0,0"/>
+        <TextBox x:Name="txtPassword" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" Margin="400,185,0,0"/>
+        <Label Content="Choose username: " HorizontalAlignment="Left" Margin="228,140,0,0" VerticalAlignment="Top" Width="172" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Choose password: " HorizontalAlignment="Left" Margin="232,174,0,0" VerticalAlignment="Top" Width="163" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="btnConfirm" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="102" Click="btnConfirm_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Margin="400,254,0,0"/>
+        <TextBox x:Name="txtConfirmPassword" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" Margin="400,219,0,0"/>
+        <Label Content="Confirm password: " HorizontalAlignment="Left" Margin="224,208,0,0" VerticalAlignment="Top" Width="171" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Register User Window" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="574" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
+        <Button x:Name="btnGoBackToMain" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="400,292,0,0" VerticalAlignment="Top" Width="102" FontSize="14" FontWeight="Bold" Background="#FF9957ED" Click="btnGoBackToMain_Click"/>
 
     </Grid>
 </Window>

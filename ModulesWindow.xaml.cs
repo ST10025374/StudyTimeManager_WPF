@@ -16,6 +16,11 @@ namespace ProgPoe_WPF
         private SemesterClass _Semester;
 
         /// <summary>
+        /// Instance of databaseManagerClass
+        /// </summary>
+        private DatabaseManagerClass _dbManager;
+
+        /// <summary>
         /// It provides notifications when items are added, removed, or the entire list is refreshed
         /// </summary>
         public static ObservableCollection<ModuleClass> ModulesView = new ObservableCollection<ModuleClass>();
@@ -38,7 +43,18 @@ namespace ProgPoe_WPF
         public ModulesWindow(SemesterClass semester)
         {
             InitializeComponent();
-            _Semester = semester;            
+            _Semester = semester;
+            _dbManager = new DatabaseManagerClass();
+
+            // Get all modules where semester id = 
+            var modules = _dbManager.ReadModules();
+
+            if (modules.Count != 0 )
+            {
+                ModulesView = new ObservableCollection<ModuleClass>(modules);
+            }
+
+            // assign the list to modules View
             lstDisplayModuleData.ItemsSource = ModulesView;
         }
 
@@ -62,7 +78,9 @@ namespace ProgPoe_WPF
             var moduleCode = txtModuleCode.Text;
             var moduleName = txtModuleName.Text;
             int numberOfCredits = 0;
-            int classHoursPerWeek = 0;
+            int classHoursPerWeek = 0;          
+            int numberOfWeeks = _dbManager.ReadSemesterReturnNumOfWeeks();
+
             try
             {
                 numberOfCredits = int.Parse(txtNumberOfCredits.Text);
@@ -77,19 +95,26 @@ namespace ProgPoe_WPF
 
             if (!string.IsNullOrEmpty(moduleCode) && !string.IsNullOrEmpty(moduleName))
             {
-                ModuleClass Module;
-                try
-                {
-                    Module = new ModuleClass(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, _Semester.NumberOfWeeks);
-                }
-                catch
+                var Module = new ModuleClass(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, numberOfWeeks);
+
+                if (Module.StudyHoursPerWeek == 0)
                 {
                     SystemSounds.Hand.Play();
                     MessageBox.Show("Calculation Invalid, please enter a valid class hours and number of credit combination", "Error");
+                    return;            
+                }
+
+                // Create Module from database               
+                var response = _dbManager.CreateModule(Module);
+
+                if (!response.Equals(string.Empty))
+                {
+                    SystemSounds.Hand.Play();
+                    MessageBox.Show(response, "Error");
                     return;
                 }
 
-                _Semester.ModulesList.Add(Module);
+                StoredIDs.ModuleId = Module.ModuleId;
 
                 ModulesView.Add(Module);
 

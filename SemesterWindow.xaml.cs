@@ -9,11 +9,6 @@ namespace ProgPoe_WPF
 {
     public partial class SemesterWindow : Window
     {
-        /// <summary>
-        /// Instance of SemesterClass Object
-        /// </summary>
-        private SemesterClass _Semester;
-
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Default Constructor
@@ -21,17 +16,6 @@ namespace ProgPoe_WPF
         public SemesterWindow()
         {
             InitializeComponent();
-        }
-
-        ///--------------------------------------------------------------------------///
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="semester"></param>
-        public SemesterWindow(SemesterClass semester)
-        {
-            InitializeComponent();
-            _Semester = semester;
         }
 
         ///--------------------------------------------------------------------------///
@@ -48,14 +32,22 @@ namespace ProgPoe_WPF
         /// <param name="e"></param>
         private void btnAddSemester_Click(object sender, RoutedEventArgs e)
         {
-            _Semester = new SemesterClass();
-
             if (!string.IsNullOrEmpty(txtNumberOfWeeks.Text) && dtStartDate.SelectedDate.HasValue)
             {
-                _Semester.NumberOfWeeks = int.Parse(txtNumberOfWeeks.Text);
-                _Semester.StartDate = dtStartDate.SelectedDate.Value;
+                // Create Semester from database
+                var newSemester = new SemesterClass(dtStartDate.SelectedDate.Value, int.Parse(txtNumberOfWeeks.Text));
+                var response = new DatabaseManagerClass().CreateSemester(newSemester);
 
-                ModulesWindow moduleWindow = new ModulesWindow(_Semester);
+                if (!response.Equals(string.Empty))
+                {
+                    SystemSounds.Hand.Play();
+                    MessageBox.Show(response, "Error");
+                    return;
+                }
+
+                StoredIDs.SemesterId = newSemester.SemesterId;  
+
+                ModulesWindow moduleWindow = new ModulesWindow();
                 moduleWindow.Show();
                 Hide();
             }
