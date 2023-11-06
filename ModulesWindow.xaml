@@ -19,18 +19,9 @@
         <TextBox x:Name="txtNumberOfCredits" HorizontalAlignment="Left" Margin="250,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" PreviewTextInput="txtNumberOfCredits_PreviewTextInput"/>
         <TextBox x:Name="txtClassHoursPerWeek" HorizontalAlignment="Left" Margin="250,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" PreviewTextInput="txtClassHoursPerWeek_PreviewTextInput"/>
         <Button x:Name="btnAddModule" Content="   Add &#xD;&#xA;Module" HorizontalAlignment="Left" Margin="326,230,0,0" VerticalAlignment="Top" Width="78" Height="46" Click="btnAddModule_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
-        <ListView x:Name="lstDisplayModuleData" 
-          d:ItemsSource="{d:SampleData ItemCount=5}" 
-          Margin="416,167,86,126" 
-          SelectionChanged="lstDisplayModuleData_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Module code" DisplayMemberBinding="{Binding ModuleCode}" Width="120"/>
-                    <GridViewColumn Header="Weekly self study hours" DisplayMemberBinding="{Binding StudyHoursPerWeek}" Width="150"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
         <Label Content="Modules Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="258" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
-        <Label Content="Click on the module &#xD;&#xA;you spent studying below to &#xD;&#xA;add self study hours spent  " HorizontalAlignment="Left" Margin="416,90,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="203" Height="72" FontSize="14" FontFamily="Arial"/>
+        <Label Content="Click on the module &#xD;&#xA;you spent studying below to &#xD;&#xA;add self study hours spent  " HorizontalAlignment="Left" Margin="438,90,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="203" Height="72" FontSize="14" FontFamily="Arial"/>
+        <Button x:Name="btnGoBack" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="302,291,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold" Background="#FF9957ED"/>
+        <ListBox x:Name="lstDisplayModuleData" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="438,167,154,120" SelectionChanged="lbModules_SelectionChanged"/>
     </Grid>
 </Window>

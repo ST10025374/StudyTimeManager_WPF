@@ -10,23 +10,35 @@
         <ImageBrush ImageSource="pack://application:,,,/ProgPoe_ClassLibrary;component/Image/Background1.png"/>
     </Window.Background>
     <Grid x:Name="btnGoBack">
-        <Label Content="Amount of hours  spent studying:" HorizontalAlignment="Left" Margin="50,184,0,0" VerticalAlignment="Top" Width="298" FontSize="18" FontWeight="Bold"/>
-        <TextBox x:Name="txtNumberOfSpentWorking" HorizontalAlignment="Left" Margin="362,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" PreviewTextInput="txtNumberOfSpentWorking_PreviewTextInput"/>
-        <Button x:Name="btnAddSelfStudyHours" Content="Record" HorizontalAlignment="Left" Margin="362,272,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSelfStudy_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
-        <Label Content="Pick date spent studying:" HorizontalAlignment="Left" Margin="124,230,0,0" VerticalAlignment="Top" Width="224" FontWeight="Bold" FontSize="18"/>
-        <DatePicker x:Name="dtDateWorked" HorizontalAlignment="Left" Margin="362,236,0,0" VerticalAlignment="Top"/>
-        <Label Content="Self Study Weekly Session" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="304" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
-        <Button x:Name="btnGoBack1" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="362,310,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold" Background="#FF9957ED"/>
-        <Label x:Name="lbl1" Content="Self study hours left for current week:" HorizontalAlignment="Left" Margin="310,110,0,0" VerticalAlignment="Top" Width="333" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label Content="Amount of hours  spent studying:" HorizontalAlignment="Left" Margin="10,234,0,0" VerticalAlignment="Top" Width="298" FontSize="18" FontWeight="Bold"/>
+        <TextBox x:Name="txtNumberOfSpentWorking" HorizontalAlignment="Left" Margin="346,242,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" PreviewTextInput="txtNumberOfSpentWorking_PreviewTextInput"/>
+        <Button x:Name="btnAddSelfStudyHours" Content="Record" HorizontalAlignment="Left" Margin="344,320,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSelfStudy_Click" FontSize="14" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
+        <Label Content="Pick date spent studying:" HorizontalAlignment="Left" Margin="82,268,0,0" VerticalAlignment="Top" Width="224" FontWeight="Bold" FontSize="18"/>
+        <DatePicker x:Name="dtDateWorked" HorizontalAlignment="Left" Margin="342,278,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <DatePicker.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-3.614"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.758"/>
+                </TransformGroup>
+            </DatePicker.RenderTransform>
+        </DatePicker>
+        <Label Content="Self Study Manager" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="304" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
+        <Button x:Name="btnGoBack1" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="344,361,0,0" VerticalAlignment="Top" Width="102" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold" Background="#FF9957ED"/>
+        <Label x:Name="lbl1" Content="Self study hours left for current week:" HorizontalAlignment="Left" Margin="11,0,0,0" VerticalAlignment="Center" Width="333" FontWeight="Bold" FontSize="18" Foreground="Black"/>
         <Label x:Name="lblModuleCode" Content="Code" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="274" FontWeight="Bold" FontSize="36" Foreground="Black"/>
-        <Label x:Name="lblHoursLeft" Content="0" HorizontalAlignment="Left" Margin="648,110,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
-        <ListBox x:Name="lstDisplaySessions" Margin="506,198,38,101" Background="White"/>
-        <Label x:Name="lbl2" Content="Weekly self study hours required:" HorizontalAlignment="Left" Margin="347,76,0,0" VerticalAlignment="Top" Width="296" FontWeight="Bold" FontSize="18" Foreground="Black"/>
-        <Label Content="Sessions" HorizontalAlignment="Left" Margin="506,144,0,0" VerticalAlignment="Top" Width="103" FontSize="36" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="49"/>
-        <Label x:Name="lbl2_Copy" Content="Current Week:" HorizontalAlignment="Left" Margin="506,42,0,0" VerticalAlignment="Top" Width="138" FontWeight="Bold" FontSize="18" Foreground="Black"/>
-        <Label x:Name="lblCurrentWeek" Content="0" HorizontalAlignment="Left" Margin="644,23,0,0" VerticalAlignment="Top" Width="57" FontWeight="Bold" FontSize="36" Foreground="White"/>
-        <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="648,76,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
-        <Label Content="total hours:" HorizontalAlignment="Left" Margin="634,154,0,0" VerticalAlignment="Top" Width="103" FontSize="24" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="36"/>
-        <Label x:Name="lblTotalHours" Content="0" HorizontalAlignment="Left" Margin="725,156,0,0" VerticalAlignment="Top" Width="59" FontWeight="Bold" FontSize="18" Foreground="White" RenderTransformOrigin="0.271,0.414"/>
+        <Label x:Name="lblHoursLeft" Content="0" HorizontalAlignment="Left" Margin="343,0,0,0" VerticalAlignment="Center" Width="89" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <ListBox x:Name="lstDisplaySessions" Margin="439,60,195,239" Background="White"/>
+        <Label x:Name="lbl2" Content="Weekly self study hours required:" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Width="296" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label Content="Sessions" HorizontalAlignment="Left" Margin="404,8,0,0" VerticalAlignment="Top" Width="102" FontSize="36" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="49"/>
+        <Label x:Name="lbl2_Copy" Content="Current Week:" HorizontalAlignment="Left" Margin="9,137,0,0" VerticalAlignment="Top" Width="138" FontWeight="Bold" FontSize="18" Foreground="Black"/>
+        <Label x:Name="lblCurrentWeek" Content="0" HorizontalAlignment="Left" Margin="147,118,0,0" VerticalAlignment="Top" Width="57" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label x:Name="lblHoursRequired" Content="0" HorizontalAlignment="Left" Margin="344,169,0,0" VerticalAlignment="Top" Width="90" FontWeight="Bold" FontSize="18" Foreground="White"/>
+        <Label Content="Total hours:" HorizontalAlignment="Left" Margin="502,18,0,0" VerticalAlignment="Top" Width="103" FontSize="24" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="36"/>
+        <Label x:Name="lblTotalHours" Content="0" HorizontalAlignment="Left" Margin="595,21,0,0" VerticalAlignment="Top" Width="59" FontWeight="Bold" FontSize="18" Foreground="White" RenderTransformOrigin="0.271,0.414"/>
+        <ListBox x:Name="lblWeeks" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="649,60,17,50"/>
+        <Label Content="Weeks" HorizontalAlignment="Left" Margin="649,8,0,0" VerticalAlignment="Top" Width="103" FontSize="36" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="46"/>
+        <Label Content="Time" HorizontalAlignment="Left" Margin="737,18,0,0" VerticalAlignment="Top" Width="46" FontSize="24" FontWeight="Bold" Foreground="White" FontFamily="Chiller" Height="36"/>
     </Grid>
 </Window>

@@ -9,50 +9,19 @@ namespace ProgPoe_WPF
     public partial class SelfStudyWindow : Window
     {
         /// <summary>
-        /// Instance of SemesterClass
-        /// </summary>
-        private SemesterClass _Semester;
-
-        /// <summary>
         /// Instance of CalculationClass
         /// </summary>
         private CalculationsClass Calculate = new CalculationsClass();
-
-        /// <summary>
-        /// Store Module Code selected from ModulesWindow
-        /// </summary>
-        private string _ModuleCode;
-        ///--------------------------------------------------------------------------///
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public SelfStudyWindow()
-        {
-            InitializeComponent();           
-        }
-
+      
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Constructor
         /// Checks Module List for code to display Module self study in label
         /// </summary>
-        public SelfStudyWindow(SemesterClass semester, string moduleCode)
+        public SelfStudyWindow()
         {
             InitializeComponent();
-            _Semester = semester;
-            _ModuleCode = moduleCode;
-            lblModuleCode.Content = _ModuleCode;
-            
-            foreach (var Module in _Semester.ModulesList)
-            {
-                if (Module.ModuleCode == _ModuleCode)
-                {
-                    lblCurrentWeek.Content = Module.CurrentWeek;
-                    lblHoursRequired.Content = Module.StudyHoursPerWeek.ToString();
-                    lblHoursLeft.Content =  Module.StudyHoursLeft.ToString();
-                }
-            }
-
+                        
             DisplayStudySessions();
         }
 
@@ -181,7 +150,7 @@ namespace ProgPoe_WPF
         /// <param name="e"></param>
         private void btnGoBack_Click(object sender, RoutedEventArgs e)
         {
-            ModulesWindow moduleWindow = new ModulesWindow(_Semester);
+            ModulesWindow moduleWindow = new ModulesWindow();
             moduleWindow.Show();
             Hide();
         }

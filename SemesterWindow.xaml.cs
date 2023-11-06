@@ -8,13 +8,13 @@ using System.Windows;
 namespace ProgPoe_WPF
 {
     public partial class SemesterWindow : Window
-    {
+    {     
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Default Constructor
         /// </summary>
         public SemesterWindow()
-        {
+        {          
             InitializeComponent();
         }
 
@@ -45,11 +45,15 @@ namespace ProgPoe_WPF
                     return;
                 }
 
-                StoredIDs.SemesterId = newSemester.SemesterId;  
+                StoredIDs.SemesterId = newSemester.SemesterId;
 
-                ModulesWindow moduleWindow = new ModulesWindow();
-                moduleWindow.Show();
-                Hide();
+                // Store last semester from user added
+                var LogInSemester = new DatabaseManagerClass().CreateLogIn(newSemester);
+
+                MessageBox.Show("Semester information saved.", "Saved");
+
+                txtNumberOfWeeks.Text = string.Empty;
+                dtStartDate.Text = null; 
             }
             else
             {
@@ -69,6 +73,19 @@ namespace ProgPoe_WPF
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Takie user to Menu Window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGoBack_Click(object sender, RoutedEventArgs e)
+        {
+            MenuWindow menuWindow = new MenuWindow();
+            menuWindow.Show();
+            Hide();
         }
     }
 }

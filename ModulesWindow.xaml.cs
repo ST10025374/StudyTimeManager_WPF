@@ -1,4 +1,6 @@
 ﻿using ProgPoe_ClassLibrary;
+using ProgPoePart1New;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Media;
@@ -11,14 +13,14 @@ namespace ProgPoe_WPF
     public partial class ModulesWindow : Window
     {
         /// <summary>
-        /// Instance of semesterClass
-        /// </summary>
-        private SemesterClass _Semester;
-
-        /// <summary>
         /// Instance of databaseManagerClass
         /// </summary>
         private DatabaseManagerClass _dbManager;
+
+        /// <summary>
+        /// Store ModuleClass Object List
+        /// </summary>
+        private List<ModuleClass> ModuleList;
 
         /// <summary>
         /// It provides notifications when items are added, removed, or the entire list is refreshed
@@ -29,33 +31,28 @@ namespace ProgPoe_WPF
         /// <summary>
         /// Default Constructor
         /// </summary>
-        /// <param name="semester"></param>
         public ModulesWindow()
         {
             InitializeComponent();
+         
+            PopulateListView();
         }
 
         ///--------------------------------------------------------------------------///
         /// <summary>
-        /// Constructor
+        /// 
         /// </summary>
-        /// <param name="semester"></param>
-        public ModulesWindow(SemesterClass semester)
+        private void PopulateListView()
         {
-            InitializeComponent();
-            _Semester = semester;
-            _dbManager = new DatabaseManagerClass();
+            this.ModuleList = new DatabaseManagerClass().GetModuleList();
+            
+            lstDisplayModuleData.Items.Clear();
 
-            // Get all modules where semester id = 
-            var modules = _dbManager.ReadModules();
-
-            if (modules.Count != 0 )
+            foreach (var module in ModuleList)
             {
-                ModulesView = new ObservableCollection<ModuleClass>(modules);
+                lstDisplayModuleData.Items.Add(module.StringOutput());
             }
 
-            // assign the list to modules View
-            lstDisplayModuleData.ItemsSource = ModulesView;
         }
 
         ///--------------------------------------------------------------------------///
@@ -79,7 +76,7 @@ namespace ProgPoe_WPF
             var moduleName = txtModuleName.Text;
             int numberOfCredits = 0;
             int classHoursPerWeek = 0;          
-            int numberOfWeeks = _dbManager.ReadSemesterReturnNumOfWeeks();
+            int numberOfWeeks = new DatabaseManagerClass().ReadSemesterReturnNumOfWeeks();
 
             try
             {
@@ -105,7 +102,7 @@ namespace ProgPoe_WPF
                 }
 
                 // Create Module from database               
-                var response = _dbManager.CreateModule(Module);
+                var response = new DatabaseManagerClass().CreateModule(Module);
 
                 if (!response.Equals(string.Empty))
                 {
@@ -122,6 +119,8 @@ namespace ProgPoe_WPF
                 txtModuleName.Text = string.Empty;
                 txtNumberOfCredits.Text = string.Empty;
                 txtClassHoursPerWeek.Text = string.Empty;
+
+                PopulateListView();
             }
             else
             {
@@ -166,7 +165,7 @@ namespace ProgPoe_WPF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lstDisplayModuleData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /*private void lstDisplayModuleData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lstDisplayModuleData.SelectedItem is ModuleClass selectedModule)
             {
@@ -182,7 +181,7 @@ namespace ProgPoe_WPF
                     Hide();
                 }
             }
-
+        */
             /*       ------------ Old code Without using LINQ -------------
             if (lstDisplayModuleData.SelectedItem is ModuleClass selectedModule)
             {
@@ -199,7 +198,57 @@ namespace ProgPoe_WPF
                     }
                 }
             }
-            */
+            
+        }
+        */
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Take user to Menu Window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGoBack_Click(object sender, RoutedEventArgs e)
+        {
+            MenuWindow menuWindow = new MenuWindow();
+            menuWindow.Show();
+            Hide();
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lbModules_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int selectedIndex = lstDisplayModuleData.SelectedIndex;
+
+            if (selectedIndex >= 0)
+            {
+                // Ensure the selected index is valid
+                if (selectedIndex < this.ModuleList.Count)
+                {
+                    ModuleClass selectedModule = ModuleList[selectedIndex];
+                    string ModuleCodeSelected = selectedModule.ModuleCode;
+
+                    foreach (var Module in ModuleList)
+                    {
+                        if (Module.ModuleCode.Equals(ModuleCodeSelected))
+                        {
+                            //Store ModuleId
+                            StoredIDs.ModuleId = new DatabaseManagerClass().GetModuleID(ModuleCodeSelected);
+
+                            SelfStudyWindow selfStudyWindow = new SelfStudyWindow();
+                            selfStudyWindow.Show();
+                            Hide();
+                            break;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

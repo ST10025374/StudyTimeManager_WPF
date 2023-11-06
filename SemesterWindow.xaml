@@ -14,8 +14,10 @@
         <Label Content="Start date of the semester:" HorizontalAlignment="Left" Margin="219,173,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
         <TextBox x:Name="txtNumberOfWeeks" HorizontalAlignment="Left" Margin="479,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" PreviewTextInput="txtNumberOfWeeks_PreviewTextInput"/>
         <DatePicker x:Name="dtStartDate" HorizontalAlignment="Left" Margin="479,178,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnAddSemester" Content="Add Semester" HorizontalAlignment="Left" Margin="479,217,0,0" VerticalAlignment="Top" Width="102" Click="btnAddSemester_Click" Height="26" FontWeight="Bold" FontSize="14" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
+        <Button x:Name="btnAddSemester" Content="Add or Update Semester" HorizontalAlignment="Left" Margin="479,217,0,0" VerticalAlignment="Top" Width="178" Click="btnAddSemester_Click" Height="26" FontWeight="Bold" FontSize="14" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
         <Label Content="Semester Information" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" FontSize="36" FontFamily="Haettenschweiler" Height="56"/>
+        <Button x:Name="btnGoBack" Content="&lt;- Go Back" HorizontalAlignment="Left" Margin="479,257,0,0" VerticalAlignment="Top" Width="178" Click="btnGoBack_Click" FontSize="14" FontWeight="Bold" Background="#FF9957ED"/>
+        <Label Content="Note: If you Update  all previous &#xD;&#xA;Data related to that Semester will &#xD;&#xA;be deleted " HorizontalAlignment="Left" Margin="222,218,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="232" Height="63" FontSize="14" FontFamily="Arial" Foreground="White"/>
 
     </Grid>
 </Window>

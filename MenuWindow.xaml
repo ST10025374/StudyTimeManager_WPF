@@ -13,7 +13,7 @@
         <Grid Background="Black" HorizontalAlignment="Left" Width="200">
             <StackPanel>
 
-                <ListView x:Name="menuListView" FontFamily="Century Gothic" FontSize="20" Foreground="White" BorderBrush="Transparent" Background="Transparent" SelectionChanged="menuListView_SelectionChanged">
+                <ListView x:Name="menuListView" FontFamily="Century Gothic" FontSize="20" Foreground="White" BorderBrush="Transparent" Background="Transparent">
                     <ListViewItem Height="30">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock x:Name="menuSemester" Text="Semester Window" PreviewMouseDown="menuSemester_PreviewMouseDown" />
