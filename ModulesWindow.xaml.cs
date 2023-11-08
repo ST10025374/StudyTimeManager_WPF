@@ -1,8 +1,6 @@
 ﻿using ProgPoe_ClassLibrary;
 using ProgPoePart1New;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -21,11 +19,6 @@ namespace ProgPoe_WPF
         /// Store ModuleClass Object List
         /// </summary>
         private List<ModuleClass> ModuleList;
-
-        /// <summary>
-        /// It provides notifications when items are added, removed, or the entire list is refreshed
-        /// </summary>
-        public static ObservableCollection<ModuleClass> ModulesView = new ObservableCollection<ModuleClass>();
 
         ///--------------------------------------------------------------------------///
         /// <summary>
@@ -76,7 +69,7 @@ namespace ProgPoe_WPF
             var moduleName = txtModuleName.Text;
             int numberOfCredits = 0;
             int classHoursPerWeek = 0;          
-            int numberOfWeeks = new DatabaseManagerClass().ReadSemesterReturnNumOfWeeks();
+            var semester = new DatabaseManagerClass().ReadSemesterReturnNumOfWeeks();
 
             try
             {
@@ -92,7 +85,7 @@ namespace ProgPoe_WPF
 
             if (!string.IsNullOrEmpty(moduleCode) && !string.IsNullOrEmpty(moduleName))
             {
-                var Module = new ModuleClass(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, numberOfWeeks);
+                var Module = new ModuleClass(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, semester.NumberOfWeeks);
 
                 if (Module.StudyHoursPerWeek == 0)
                 {
@@ -111,9 +104,16 @@ namespace ProgPoe_WPF
                     return;
                 }
 
-                StoredIDs.ModuleId = Module.ModuleId;
+                // Populate database Table
+                var error = new DatabaseManagerClass().AddSelfStudy(semester.StartDate, semester.NumberOfWeeks, Module.StudyHoursPerWeek, Module.ModuleId);
+                if (!error.Equals(string.Empty))
+                {
+                    SystemSounds.Hand.Play();
+                    MessageBox.Show(error, "Error");
+                    return;
+                }
 
-                ModulesView.Add(Module);
+                StoredIDs.ModuleId = Module.ModuleId;
 
                 txtModuleCode.Text = string.Empty;
                 txtModuleName.Text = string.Empty;
@@ -154,53 +154,6 @@ namespace ProgPoe_WPF
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
-        ///--------------------------------------------------------------------------///
-        /// <summary>
-        /// Method allows user to select module from listView to add study session
-        /// It checks for a match of the module code in the moduleList
-        /// Uses LINQ to find the specific module by ModuleCode
-        /// After match is found it it sends the module code to SelfStudyWindow and the _Semester object 
-        /// After user clicks ModuleWindow is closed and SelfStudyWindow is opened
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /*private void lstDisplayModuleData_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lstDisplayModuleData.SelectedItem is ModuleClass selectedModule)
-            {
-                string ModuleCodeSelected = selectedModule.ModuleCode;
-
-                var targetModule = _Semester.ModulesList
-                    .FirstOrDefault(module => module.ModuleCode == ModuleCodeSelected);
-
-                if (targetModule != null)
-                {
-                    SelfStudyWindow selfStudyWindow = new SelfStudyWindow(_Semester, ModuleCodeSelected);
-                    selfStudyWindow.Show();
-                    Hide();
-                }
-            }
-        */
-            /*       ------------ Old code Without using LINQ -------------
-            if (lstDisplayModuleData.SelectedItem is ModuleClass selectedModule)
-            {
-                string ModuleCodeSelected = selectedModule.ModuleCode;
-
-                foreach (var Module in _Semester.ModulesList)
-                {
-                    if (Module.ModuleCode == ModuleCodeSelected)
-                    {
-                        SelfStudyWindow selfStudyWindow = new SelfStudyWindow(_Semester, ModuleCodeSelected);
-                        selfStudyWindow.Show();
-                        Hide();
-                        break; 
-                    }
-                }
-            }
-            
-        }
-        */
 
         ///--------------------------------------------------------------------------///
         /// <summary>
@@ -248,7 +201,6 @@ namespace ProgPoe_WPF
                     }
                 }
             }
-
         }
     }
 }

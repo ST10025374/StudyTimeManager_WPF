@@ -1,8 +1,10 @@
 ﻿using ProgPoe_ClassLibrary;
-using System.Linq;
+using System;
+using System.Collections.Generic;
 using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace ProgPoe_WPF
 {
@@ -12,7 +14,17 @@ namespace ProgPoe_WPF
         /// Instance of CalculationClass
         /// </summary>
         private CalculationsClass Calculate = new CalculationsClass();
-      
+   
+        /// <summary>
+        /// Store ModuleClass Obj
+        /// </summary>
+        private ModuleClass Module = new ModuleClass();
+
+        /// <summary>
+        /// Store StudyWeeksClass List
+        /// </summary>
+        private List<StudyWeeksClass> StudyWeeksList;
+
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Constructor
@@ -21,8 +33,15 @@ namespace ProgPoe_WPF
         public SelfStudyWindow()
         {
             InitializeComponent();
-                        
-            DisplayStudySessions();
+
+            this.Module = new DatabaseManagerClass().GetOneModule();
+            UpdateCurrentWeeksLeft();
+            lblHoursRequired.Content = Module.StudyHoursPerWeek;
+            lblCurrentWeek.Content = Module.CurrentWeek;
+         
+            DisplayStudyWeeks();
+
+            this.StudyWeeksList = new DatabaseManagerClass().GetSelfStudyList();
         }
 
         ///--------------------------------------------------------------------------///
@@ -40,93 +59,111 @@ namespace ProgPoe_WPF
         private void btnAddSelfStudy_Click(object sender, RoutedEventArgs e)
         {
             var HoursSpent = txtNumberOfSpentWorking.Text;
-
             if (!string.IsNullOrEmpty(HoursSpent) && dtDateWorked.SelectedDate.HasValue)
             {
-                // finding module by code
-                var targetModule = _Semester.ModulesList
-                    .FirstOrDefault(module => module.ModuleCode == _ModuleCode);
+                // Create study session from database
+                var intHours = int.Parse(HoursSpent);
+                var selectedDate = dtDateWorked.SelectedDate.Value;
 
-                // cannot have 2 study sessions on one day
-                if (targetModule != null &&
-                    !targetModule.StudySessionsRecords.ContainsKey(dtDateWorked.SelectedDate.Value))
-                {
-                    int NewHoursLeft = Calculate.CalcMinus(targetModule.StudyHoursLeft, int.Parse(HoursSpent));
+                AddStudySessionToDb(intHours, HoursSpent, selectedDate);
 
-                    if (NewHoursLeft.Equals(0))
-                    {
-                        MessageBox.Show("Study time for this week was completed. " +
-                            "Study time will restart for next week", "Hours completed");
+                // reloads the current week
+                UpdateCurrentWeeksLeft();
+            }
+            else
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show("Please add amount of hours spent working and the date", "Error");
+            }
 
-                        lblHoursLeft.Content = targetModule.StudyHoursLeft;
+                txtNumberOfSpentWorking.Text = string.Empty;
+                dtDateWorked.Text = null;
+            
+                DisplayStudyWeeks();    
+        }
 
-                        // Current week changes
-                        targetModule.CurrentWeek = targetModule.CurrentWeek + 1;
-                        lblCurrentWeek.Content = targetModule.CurrentWeek;
-                        NewHoursLeft = targetModule.StudyHoursPerWeek;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Study session saved.", "Saved");
-                    }
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// 
+        /// </summary>
+        public void AddStudySessionToDb(int intHours, string HoursSpent, DateTime selectedDate)
+        {
+            StudyWeeksClass closest = new DatabaseManagerClass().GetClosestDate(selectedDate);
 
-                    targetModule.TotalHours += int.Parse(HoursSpent);
-                    lblTotalHours.Content = targetModule.TotalHours;
+            if (closest.StudyWeeksId == Guid.Empty)
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show("Please Select a valid date!", "Error");
+                return;
+            }
+            else
+            {
+                var response = new DatabaseManagerClass().CreateStudySession(intHours, selectedDate);
 
-                    targetModule.StudyHoursLeft = NewHoursLeft;
-                    lblHoursLeft.Content = NewHoursLeft.ToString();
-
-                    targetModule.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
-                }
-                else
+                if (!response.Equals(string.Empty))
                 {
                     SystemSounds.Hand.Play();
-                    MessageBox.Show("A study record for this date already exists.", "Error");
+                    MessageBox.Show(response, "Error");
+                    return;
                 }
+            }
+
+            var selected = new CalculationsClass().GetDateForStudyHours(selectedDate, StudyWeeksList);
+            if (selected.HoursLeft == 0)
+            {
+                MessageBox.Show("The self study hours are fulfilled");
+                return;
+
+            }
+            if (selected.HoursLeft < intHours)
+            {
+                MessageBox.Show("you overstudied");
+                selected.HoursLeft = 0;
             }
             else
             {
-                SystemSounds.Hand.Play();
-                MessageBox.Show("Please add amount of hours spent working and the date", "Error");
+                selected.HoursLeft -= intHours;
             }
 
-            txtNumberOfSpentWorking.Text = string.Empty;
+            int NewHoursLeft = Calculate.CalcMinus(closest.HoursLeft, int.Parse(HoursSpent));
 
-            DisplayStudySessions();
+            UpdateListToDb(selected, NewHoursLeft);
+        }
 
-            /*             -------------- Old code without using LINQ----------------
-            var HoursSpent = txtNumberOfSpentWorking.Text;
-           
-            if (!string.IsNullOrEmpty(HoursSpent) && dtDateWorked.SelectedDate.HasValue)
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UpdateListToDb(StudyWeeksClass selected, int NewHoursLeft)
+        {
+            // Update list and post to database
+            string result = new DatabaseManagerClass().UpdateStudyHours(selected);
+            if (!result.Equals(string.Empty))
             {
-                foreach (var Module in _Semester.ModulesList)
-                {
-                    if (Module.ModuleCode == ModuleCode)
-                    {
-                        if (Module.StudySessionsRecords.ContainsKey(dtDateWorked.SelectedDate.Value))
-                        {
-                            SystemSounds.Hand.Play();
-                            MessageBox.Show("A study record for this date already exists.", "Error");
-                            return;
-                        }
+                SystemSounds.Hand.Play();
+                MessageBox.Show(result, "Error");
+                return;
+            }
 
-                        double NewHoursLeft = Module.SelfStudyHoursPerWeek - double.Parse(HoursSpent);
-
-                        Module.SelfStudyHoursPerWeek = NewHoursLeft;
-
-                        lblHoursLeft.Content = Module.SelfStudyHoursPerWeek;
-
-                        Module.StudySessionsRecords.Add(dtDateWorked.SelectedDate.Value, int.Parse(txtNumberOfSpentWorking.Text));
-                        MessageBox.Show("Study record saved.", "Saved");
-                    }
-                }
+            if (NewHoursLeft.Equals(0))
+            {
+                MessageBox.Show("Study time for this week was completed. " +
+                        "Study time will restart for next week", "Hours completed");
             }
             else
             {
-                SystemSounds.Hand.Play();
-                MessageBox.Show("Please add amount of hours spent working and the date", "Error");
+                MessageBox.Show("Study session saved.", "Saved");
             }
-            */
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// 
+        /// </summary>
+        private void UpdateCurrentWeeksLeft()
+        {
+            var currentStudyWeek = new DatabaseManagerClass().GetClosestDate(DateTime.Now);
+            lblCurrentWeek.Content = currentStudyWeek.HoursLeft.ToString();
         }
 
         ///--------------------------------------------------------------------------///
@@ -154,29 +191,23 @@ namespace ProgPoe_WPF
             moduleWindow.Show();
             Hide();
         }
-
+   
         ///--------------------------------------------------------------------------///
         /// <summary>
-        /// Method use to Display study sessions in ListBox
-        /// Method gets desired moduleCode 
-        /// It uses a for each to display each key in dictionary
-        /// Combines Date and hours into a single string
+        /// 
         /// </summary>
-        public void DisplayStudySessions()
+        public void DisplayStudyWeeks()
         {
-            lstDisplaySessions.Items.Clear();
-           
-            var TargetModule = _Semester.ModulesList.FirstOrDefault(module => module.ModuleCode == _ModuleCode);
+            //here is a reminder
+            lstWeeks.Items.Clear();
+            var studySessionsList = new DatabaseManagerClass().GetSelfStudyList();
+            int i = 0;
 
-            lblTotalHours.Content = TargetModule.TotalHours.ToString(); 
-
-            if (TargetModule != null)
+            foreach ( var entry in studySessionsList )
             {
-                foreach (var entry in TargetModule.StudySessionsRecords)
-                {
-                    string Output = $"Date: {entry.Key.ToShortDateString()} Time: {entry.Value}h";
-                    lstDisplaySessions.Items.Add(Output);
-                }
+                i++;
+                string Output = $"Week {i}: {entry.StartDate.ToShortDateString()} Time: {entry.HoursLeft}h";
+                lstWeeks.Items.Add(Output);
             }
         }
     }
