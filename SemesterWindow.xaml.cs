@@ -23,10 +23,9 @@ namespace ProgPoe_WPF
         /// Store Number of weeks and start date of semester
         /// It stores inputs in SemesterClass
         /// The method checks if the TextBox and DatePicker have values otherwise 
-        /// It returns error message
-        /// Opens ModulesWindow
-        /// It passes _Semester object to ModulesWindow
-        /// When error message is displayed it comes with a sound
+        /// It returns error message if the user did not input any value
+        /// Creates a new semester and stores it in the database
+        /// Records the last semester added by the user
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -47,7 +46,6 @@ namespace ProgPoe_WPF
 
                 StoredIDs.SemesterId = newSemester.SemesterId;
 
-                // Store last semester from user added
                 var LogInSemester = new DatabaseManagerClass().CreateLogIn(newSemester);
 
                 MessageBox.Show("Semester information saved.", "Saved");

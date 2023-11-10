@@ -16,6 +16,8 @@ namespace ProgPoePart1New
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Default Constructor
+        /// Display a message if the user has not registered a semester
+        /// Get last semester from SQL Database for this user and store it in StoredIDs
         /// </summary>
         public MenuWindow()
         {
@@ -48,6 +50,7 @@ namespace ProgPoePart1New
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Take user to Modules Window
+        /// In case the user has not registered a semester, display a message
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -69,11 +72,16 @@ namespace ProgPoePart1New
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Take user to Log Out
+        /// Reset StoredIDs to empty
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void menuLogout_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            StoredIDs.SemesterId = Guid.Empty;
+            StoredIDs.ModuleId = Guid.Empty;
+            StoredIDs.UserId = Guid.Empty;
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Hide();

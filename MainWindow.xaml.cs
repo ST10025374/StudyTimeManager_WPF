@@ -20,12 +20,14 @@ namespace ProgPoePart1New
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Button to Login into semester Window
+        /// Method retrieves User ID from Database and stores it in StoredIDs Class
+        /// In case of error, a message box will be displayed
+        /// If everything is correct, MenuWindow will be displayed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            // get answer from database
             var response = new DatabaseManagerClass().ReadUser(txtUsername.Text, txtPassword.Text);
             Guid userId = Guid.NewGuid();
             try
@@ -39,7 +41,6 @@ namespace ProgPoePart1New
                 return;
             }
 
-            // if it does, login and pass on userId
             StoredIDs.UserId = userId;
             MenuWindow menuWindow = new MenuWindow();
             menuWindow.Show();
@@ -49,6 +50,7 @@ namespace ProgPoePart1New
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Method to Register User
+        /// It opens a new RegisterWindow
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

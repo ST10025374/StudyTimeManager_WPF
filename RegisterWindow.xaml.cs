@@ -10,6 +10,7 @@ namespace ProgPoePart1New
     /// </summary>
     public partial class RegisterWindow : Window
     {
+        ///--------------------------------------------------------------------------///
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -21,11 +22,12 @@ namespace ProgPoePart1New
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Button to Register User
-        /// If either the username or password is empty, display an error message and play a sound\
+        /// If either the username or password is empty, display an error message and play a sound
         /// Check if username and password are empty
         /// Create a new user with the provided username and password
         /// Attempt to create the user in the database
         /// Check if there was an error during user creation
+        /// After user creation, go to main window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -34,6 +36,30 @@ namespace ProgPoePart1New
             var username = txtUsername.Text;
             var password = txtPassword.Text;
            
+            PasswordPolicy(username, password);
+
+            var newUser = new UserClass(txtUsername.Text, txtPassword.Text);
+
+            var response = new DatabaseManagerClass().CreateUser(newUser);
+            if (!response.Equals(string.Empty))
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show(response, "Error");
+                return;
+            }
+
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Hide();
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Method to check if password meets password policy
+        /// After message is displayed user returns to main window
+        /// </summary>
+        public void PasswordPolicy(string username, string password)
+        {
             if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
             {
                 SystemSounds.Hand.Play();
@@ -41,7 +67,6 @@ namespace ProgPoePart1New
                 return;
             }
 
-            // Password policy
             if (!Regex.IsMatch(password, @"\d"))
             {
                 SystemSounds.Hand.Play();
@@ -66,22 +91,6 @@ namespace ProgPoePart1New
                 MessageBox.Show("Passwords must match!", "Error");
                 return;
             }
-
-            // Create user from database
-            var newUser = new UserClass(txtUsername.Text, txtPassword.Text);
-
-            var response = new DatabaseManagerClass().CreateUser(newUser);
-            if (!response.Equals(string.Empty))
-            {
-                SystemSounds.Hand.Play();
-                MessageBox.Show(response, "Error");
-                return;
-            }
-
-            // login to system
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Hide();
         }
 
         ///--------------------------------------------------------------------------///

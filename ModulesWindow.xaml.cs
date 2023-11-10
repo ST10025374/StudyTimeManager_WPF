@@ -1,7 +1,9 @@
 ﻿using ProgPoe_ClassLibrary;
 using ProgPoePart1New;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Media;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,11 +13,6 @@ namespace ProgPoe_WPF
     public partial class ModulesWindow : Window
     {
         /// <summary>
-        /// Instance of databaseManagerClass
-        /// </summary>
-        private DatabaseManagerClass _dbManager;
-
-        /// <summary>
         /// Store ModuleClass Object List
         /// </summary>
         private List<ModuleClass> ModuleList;
@@ -23,17 +20,19 @@ namespace ProgPoe_WPF
         ///--------------------------------------------------------------------------///
         /// <summary>
         /// Default Constructor
+        /// Populate ListView with Module Details
         /// </summary>
         public ModulesWindow()
         {
-            InitializeComponent();
-         
+            InitializeComponent();      
             PopulateListView();
         }
 
         ///--------------------------------------------------------------------------///
         /// <summary>
-        /// 
+        /// Method to populate ListView with Module Details
+        /// Clear ListView before populating
+        /// Gets module details from database
         /// </summary>
         private void PopulateListView()
         {
@@ -52,12 +51,8 @@ namespace ProgPoe_WPF
         /// <summary>
         /// Get Modules details
         /// Store them in ModuleClass Object
-        /// Store Modules in _Semester ModulesList
         /// Module Code is Displayed in ListView for user to view
-        /// If statement is used as input validation in case any input is empty it will display message
-        /// Calculate self hours study when button pressed
-        /// Calculations class method called to get values and return self hours study
-        /// returned value stored in module 
+        /// If statement is used as input validation in case any input is empty it will display message  
         /// When button is clicked TextBoxes are cleared if info is accepted
         /// When error message is displayed it comes with a sound
         /// </summary>
@@ -69,7 +64,7 @@ namespace ProgPoe_WPF
             var moduleName = txtModuleName.Text;
             int numberOfCredits = 0;
             int classHoursPerWeek = 0;          
-            var semester = new DatabaseManagerClass().ReadSemesterReturnNumOfWeeks();
+            var semester = new DatabaseManagerClass().ReadSemester();
 
             try
             {
@@ -84,37 +79,9 @@ namespace ProgPoe_WPF
             }
 
             if (!string.IsNullOrEmpty(moduleCode) && !string.IsNullOrEmpty(moduleName))
-            {
-                var Module = new ModuleClass(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, semester.NumberOfWeeks);
-
-                if (Module.StudyHoursPerWeek == 0)
-                {
-                    SystemSounds.Hand.Play();
-                    MessageBox.Show("Calculation Invalid, please enter a valid class hours and number of credit combination", "Error");
-                    return;            
-                }
-
-                // Create Module from database               
-                var response = new DatabaseManagerClass().CreateModule(Module);
-
-                if (!response.Equals(string.Empty))
-                {
-                    SystemSounds.Hand.Play();
-                    MessageBox.Show(response, "Error");
-                    return;
-                }
-
-                // Populate database Table
-                var error = new DatabaseManagerClass().AddSelfStudy(semester.StartDate, semester.NumberOfWeeks, Module.StudyHoursPerWeek, Module.ModuleId);
-                if (!error.Equals(string.Empty))
-                {
-                    SystemSounds.Hand.Play();
-                    MessageBox.Show(error, "Error");
-                    return;
-                }
-
-                StoredIDs.ModuleId = Module.ModuleId;
-
+            {              
+                CreateModule(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, semester);
+              
                 txtModuleCode.Text = string.Empty;
                 txtModuleName.Text = string.Empty;
                 txtNumberOfCredits.Text = string.Empty;
@@ -126,6 +93,66 @@ namespace ProgPoe_WPF
             {
                 SystemSounds.Hand.Play();
                 MessageBox.Show("Please make sure you added all module information", "Error");
+            }
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Method That Creates ModuleClass Object
+        /// Returns ModuleClass Object
+        /// </summary>
+        /// <returns></returns>
+        public void CreateModule(string moduleCode, string moduleName, int numberOfCredits,int classHoursPerWeek, SemesterClass semester)
+        {
+            var module = new ModuleClass(moduleCode, moduleName, numberOfCredits, classHoursPerWeek, semester.NumberOfWeeks);
+
+            if (module.StudyHoursPerWeek == 0)
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show("Calculation Invalid, please enter a valid class hours and number of credit combination", "Error");           
+            }
+            else
+            {
+                CreateModuleInDB(module, semester);
+            }          
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Method to create module in database
+        /// Displayes error message if any error occurs
+        /// </summary>
+        /// <param name="module"></param>
+        public void CreateModuleInDB(ModuleClass module, SemesterClass semester)
+        {
+            var response = new DatabaseManagerClass().CreateModule(module);
+
+            if (!response.Equals(string.Empty))
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show(response, "Error");
+                return;
+            }
+            else
+            {
+                PopulateStudyWeeksInDB(semester, module);
+            }
+
+        }
+
+        ///--------------------------------------------------------------------------///
+        /// <summary>
+        /// Method to populate database table with self study hours
+        /// Displayes error message if any error occurs
+        /// </summary>
+        public void PopulateStudyWeeksInDB(SemesterClass semester, ModuleClass module)
+        {
+            var error = new DatabaseManagerClass().AddSelfStudy(semester.StartDate, semester.NumberOfWeeks, module.StudyHoursPerWeek, module.ModuleId);
+            if (!error.Equals(string.Empty))
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show(error, "Error");
+                return;
             }
         }
 
@@ -170,7 +197,10 @@ namespace ProgPoe_WPF
 
         ///--------------------------------------------------------------------------///
         /// <summary>
-        /// 
+        /// Method to take user to Self Study Window
+        /// Ensures the selected index is valid
+        /// Stores ModuleId
+        /// Opens Self Study Window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -180,7 +210,6 @@ namespace ProgPoe_WPF
 
             if (selectedIndex >= 0)
             {
-                // Ensure the selected index is valid
                 if (selectedIndex < this.ModuleList.Count)
                 {
                     ModuleClass selectedModule = ModuleList[selectedIndex];
@@ -189,8 +218,7 @@ namespace ProgPoe_WPF
                     foreach (var Module in ModuleList)
                     {
                         if (Module.ModuleCode.Equals(ModuleCodeSelected))
-                        {
-                            //Store ModuleId
+                        {                      
                             StoredIDs.ModuleId = new DatabaseManagerClass().GetModuleID(ModuleCodeSelected);
 
                             SelfStudyWindow selfStudyWindow = new SelfStudyWindow();
